@@ -2,6 +2,7 @@ package de.asmax.simpleperms;
 
 import de.asmax.simpleperms.commands.AddPermissionCommand;
 import de.asmax.simpleperms.commands.AddTempPermission;
+import de.asmax.simpleperms.commands.GetPermissionCommand;
 import de.asmax.simpleperms.commands.RemovePermissionCommand;
 import de.asmax.simpleperms.permissions.PermissionManager;
 import de.asmax.simpleperms.utils.Config;
@@ -40,6 +41,7 @@ public final class Main extends JavaPlugin {
         getCommand("spadd").setExecutor(new AddPermissionCommand());
         getCommand("spremove").setExecutor(new RemovePermissionCommand());
         getCommand("sptemp").setExecutor(new AddTempPermission());
+        getCommand("spget").setExecutor(new GetPermissionCommand());
     }
 
     private void ListenerRegistration() {
