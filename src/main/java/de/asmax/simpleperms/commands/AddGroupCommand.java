@@ -38,7 +38,7 @@ public class AddGroupCommand implements CommandExecutor {
             int level = Integer.parseInt(args[1]);
 
             if(groupManager.getGroup(name)) {
-               player.sendMessage(error + "The group §4" + name + " §fexists already.");
+               player.sendMessage(error + "The group §4" + name + " §falready exists.");
                return true;
             }
 

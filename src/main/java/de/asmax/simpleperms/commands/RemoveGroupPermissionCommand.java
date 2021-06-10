@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class AddGroupPermissionCommand implements CommandExecutor {
+public class RemoveGroupPermissionCommand implements CommandExecutor {
 
     String prefix = Main.getInstance().getPrefix();
     String error = Main.getInstance().getError();
@@ -21,13 +21,13 @@ public class AddGroupPermissionCommand implements CommandExecutor {
         }
         Player player = (Player)sender;
 
-        if(!player.hasPermission("simpleperms.groups.permission.add")) {
+        if(!player.hasPermission("simpleperms.groups.permission.remove")) {
             player.sendMessage(error + "You don't have the Permission to do that.");
             return true;
         }
 
         if(args.length != 2) {
-            player.sendMessage(error + "Please use: §9/spgpadd <group> <permission>");
+            player.sendMessage(error + "Please use: §9/spgpremove <group> <permission>");
             return true;
         }
 
@@ -39,10 +39,13 @@ public class AddGroupPermissionCommand implements CommandExecutor {
             return true;
         }
 
-        groupManager.addPermission(name, permission);
-        player.sendMessage(prefix + "§aYou have successfully §2added §athe permission: §6" + permission + " §ato the Group: §6" + name);
+        if(!GroupManager.getPermission(name, permission)) {
+            player.sendMessage(error + "The Group: §9" + name + " §fhas not the Permission: §9" + permission);
+            return true;
+        }
 
+        GroupManager.removePermission(name, permission);
+        player.sendMessage(prefix + "§aYou have successfully §cremoved §athe permission: §6" + permission + " §afrom the Group: §6" + name);
         return true;
-
     }
 }
