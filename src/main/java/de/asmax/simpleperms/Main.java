@@ -1,7 +1,9 @@
 package de.asmax.simpleperms;
 
 import de.asmax.simpleperms.commands.*;
+import de.asmax.simpleperms.commands.override.OpCommand;
 import de.asmax.simpleperms.groups.GroupManager;
+import de.asmax.simpleperms.listener.JoinListener;
 import de.asmax.simpleperms.permissions.PermissionManager;
 import de.asmax.simpleperms.utils.Config;
 import org.bukkit.Bukkit;
@@ -31,6 +33,7 @@ public final class Main extends JavaPlugin {
 
         permissionManager = new PermissionManager();
         groupManager = new GroupManager();
+        initPlayerPermissions();
     }
 
     @Override
@@ -49,10 +52,25 @@ public final class Main extends JavaPlugin {
         getCommand("spgdel").setExecutor(new DeleteGroupCommand());
         getCommand("spglist").setExecutor(new ListGroupsCommand());
         getCommand("spgplist").setExecutor(new ListPermissionsCommand());
+        getCommand("spgpladd").setExecutor(new SetPlayerGroupCommand());
+        getCommand("spgplrem").setExecutor(new UnsetPlayerGroupCommand());
+        getCommand("spgplget").setExecutor(new GetPlayerByGroupCommand());
+        getCommand("spgpllist").setExecutor(new ListPlayerInGroupCommand());
     }
 
     private void ListenerRegistration() {
         PluginManager pluginManager = Bukkit.getPluginManager();
+
+        pluginManager.registerEvents(new OpCommand(), this);
+        pluginManager.registerEvents(new JoinListener(), this);
+    }
+
+    private void initPlayerPermissions() {
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            if(player != null) {
+                permissionManager.revokePermissions(player);
+            }
+        });
     }
 
     public static Main getInstance() {
