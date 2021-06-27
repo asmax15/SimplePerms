@@ -1,7 +1,6 @@
 package de.asmax.simpleperms;
 
 import de.asmax.simpleperms.commands.*;
-import de.asmax.simpleperms.commands.override.OpCommand;
 import de.asmax.simpleperms.groups.GroupManager;
 import de.asmax.simpleperms.listener.JoinListener;
 import de.asmax.simpleperms.permissions.PermissionManager;
@@ -62,7 +61,7 @@ public final class Main extends JavaPlugin {
     private void ListenerRegistration() {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
-        pluginManager.registerEvents(new OpCommand(), this);
+        //pluginManager.registerEvents(new OpCommand(), this);
         pluginManager.registerEvents(new JoinListener(), this);
     }
 
